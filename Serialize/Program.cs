@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
+
 namespace Serialize
 {
     // 1.	Объявить в консольном приложении класс Book 
