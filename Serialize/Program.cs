@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-
+using System.Runtime.Serialization.Formatters.Soap;
 
 namespace Serialize
 {
@@ -123,6 +123,15 @@ namespace Serialize
             {
                 i.Print();
             }
+            Console.WriteLine();
+
+            SoapFormatter soapformatter = new SoapFormatter();
+            using(FileStream fs=new FileStream("Persons.soap", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, people);
+                Console.WriteLine("Сериализация завершена");
+            }
+            Console.WriteLine();
             #endregion
 
             //5.	Самостоятельно рассмотреть библиотеку Newtonsoft.Json и сериализовать коллекцию в json файл.
