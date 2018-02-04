@@ -36,7 +36,7 @@ namespace Serialize
         public string BirthYear { get; set; }
         public void Print()
         {
-            Console.WriteLine("Имя : " + FirstName + " Фамилия : " + LastName + " Номер телефона : " + Number + " Год рождения : " + BirthYear);
+            Console.WriteLine("Имя : " + FirstName + "\n\tФамилия : " + LastName + "\n\tНомер телефона : " + Number + "\n\tГод рождения : " + BirthYear);
         }
     }
     class Program
@@ -76,6 +76,7 @@ namespace Serialize
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Десериализация прошла успешно");
                 Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
                 foreach (Book i in books)
                 {
                     Console.WriteLine("Название: {0}\nЦена: {1}\nАвтор: {2} \nГод издания: {3}\n", i.name,i.price,i.author,i.year);
@@ -89,42 +90,40 @@ namespace Serialize
             //Проверить его функциональность.
 
 
-            //            //4.Из csv файла (имя; фамилия; телефон; год рождения) прочитать записи в коллекцию.
-            //            //Каждая запись коллекции должна иметь тип Person.
-            //            //Сериализовать коллекцию с помощью класса SoapFormatter и сохранить в файл.
-            //            string path = @"E:\GitHub\Serialize\Serialize\Serialize\bin\Debug\Person.csv";
+            //4.Из csv файла (имя; фамилия; телефон; год рождения) прочитать записи в коллекцию.
+            //Каждая запись коллекции должна иметь тип Person.
+            //Сериализовать коллекцию с помощью класса SoapFormatter и сохранить в файл.
+            #region
+            string path = @"E:\GitHub\Serialize\Serialize\Serialize\bin\Debug\Person.csv";
 
-            //            List<Person> people = new List<Person>();
-            //            string line;
-            //            List<string> peopleline = new List<string>();
-            //            using (StreamReader rd=new StreamReader(path, System.Text.Encoding.Default))
-            //            {
+            List<Person> people = new List<Person>();
+            List<string> lines = new List<string>();
+            string[] lineR;
+           
+            using (StreamReader rd = new StreamReader(path, System.Text.Encoding.Default))
+            {
+                string line;
+                while ((line = rd.ReadLine()) != null)
+                {
+                   lines.Add(line);
+                    Console.WriteLine(line);
+                }
+            
+            }
+            Console.WriteLine();
+           for(int i = 0; i < lines.Count; i++)
+            {
+                lineR = lines[i].Split(';');
+                 people.Add(new Person() { FirstName = lineR[0], LastName = lineR[1], Number = lineR[2], BirthYear = lineR[3] });
+                
+            }
 
-            //                while ((line = rd.ReadLine()) != null)
-            //                {
-
-
-
-            //                    Console.WriteLine(line);
-            //                }
-
-
-            //for(int i = 0; i <rd.ReadToEnd().Length; i++)
-            //                    {
-            //                peopleline.Add(line);
-
-            //            } }
-            //            foreach (var i in peopleline)
-            //            {
-            //                Console.WriteLine(i);
-            //            }
-
-
-            //            //foreach (Person i in people)
-            //            //{
-            //            //    i.Print();
-            //            //}
-
+            Console.WriteLine();
+            foreach (Person i in people)
+            {
+                i.Print();
+            }
+            #endregion
 
             //5.	Самостоятельно рассмотреть библиотеку Newtonsoft.Json и сериализовать коллекцию в json файл.
             #region
