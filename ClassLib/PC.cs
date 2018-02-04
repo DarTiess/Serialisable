@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ClassLib
-{
+{[Serializable]
    public class PC
     {
         /*6.	Создать библиотеку классов с именем «ClassLib». 
