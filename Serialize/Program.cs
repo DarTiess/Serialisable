@@ -26,6 +26,33 @@ namespace Serialize
         {
             Console.WriteLine("Наименование произведения: " + name + "\n\tцена: " + price + "\n\tавтор: " + author + "\n\tгод издания: " + year);
         }
+        public Book Update(Book obj)
+        {
+            Console.Write("Новое название : ");
+            obj.name = Console.ReadLine();
+            Console.Write("Новая цена : ");
+            obj.price = Int32.Parse(Console.ReadLine());
+            Console.Write("Новый автор : ");
+            obj.author = Console.ReadLine();
+            Console.Write("ГОД : ");
+            obj.year = Int32.Parse(Console.ReadLine());
+            return obj;
+
+        }
+        public Book AddBook()
+        {
+            Book obj = new Book();
+            Console.Write("Новое название : ");
+            obj.name = Console.ReadLine();
+            Console.Write("Новая цена : ");
+            obj.price = Int32.Parse(Console.ReadLine());
+            Console.Write("Новый автор : ");
+            obj.author = Console.ReadLine();
+            Console.Write("ГОД : ");
+            obj.year = Int32.Parse(Console.ReadLine());
+            return obj;
+        }
+       
     }
     [Serializable]
     public class Person
@@ -89,6 +116,50 @@ namespace Serialize
             //Данный атрибут должен выполнять прикладную задачу(а не демонстрационную).
             //Проверить его функциональность.
 
+            int choise;
+            Console.WriteLine("Выберите 1 - для редактирования Книги\n\t2 - для добавления Книги в список\n\t3 - для удаления Книги из списка");
+            choise = Int32.Parse(Console.ReadLine());
+            
+            Book upbook = new Book();
+           
+            switch (choise)
+            {
+                case 1:
+                    Console.WriteLine("Введите порядковый номер книги");
+                    choise = Int32.Parse(Console.ReadLine()) - 1;
+                    books[choise] = upbook.Update(books[choise]);
+                    Console.WriteLine("Информация о Книге была оредакированна");
+                    break;
+                case 2:
+                    books.Add(upbook.AddBook());
+                    Console.WriteLine("Книга добавлена в список");
+                    break;
+                case 3:
+                    Console.WriteLine("Введите порядковый номер книги");
+                    choise = Int32.Parse(Console.ReadLine()) - 1;
+                    books.RemoveAt(choise);
+                    Console.WriteLine("Книга удалена");
+                    break;
+
+            }
+            Console.WriteLine();
+            foreach (Book i in books)
+            {
+                Console.WriteLine("Название: {0}\nЦена: {1}\nАвтор: {2} \nГод издания: {3}\n", i.name, i.price, i.author, i.year);
+
+            }
+            using (FileStream fs = new FileStream("Books.dat", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, books);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Список сохранен в Books.dat файл");
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+           
+            Console.WriteLine();
+            
+       
 
             //4.Из csv файла (имя; фамилия; телефон; год рождения) прочитать записи в коллекцию.
             //Каждая запись коллекции должна иметь тип Person.
